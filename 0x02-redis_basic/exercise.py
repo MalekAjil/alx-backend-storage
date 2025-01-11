@@ -58,6 +58,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
@@ -111,3 +112,20 @@ class Cache:
           or None if the key does not exist.
         """
         return self.get(key, int)
+
+    def replay(method: Callable):
+        """
+        Display the history of calls of a particular function.
+        Args:
+        method (Callable): The method to replay the history for.
+        Returns: None
+        """
+        redis_client = method.__self__._redis
+        input_key = f"{method.__qualname__}:inputs"
+        output_key = f"{method.__qualname__}:outputs"
+        inputs = redis_client.lrange(input_key, 0, -1)
+        outputs = redis_client.lrange(output_key, 0, -1)
+        print(f"{method.__qualname__} was called {len(inputs)} times:")
+        for inp, out in zip(inputs, outputs):
+            print(f"{method.__qualname__}(*{inp.decode('utf-8')}) -> " +
+                  f"{out.decode('utf-8')}")
