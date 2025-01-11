@@ -1,5 +1,3 @@
-//adds a new attribute to a document in the collection school
-db.school.updateMany(
-    { name: "Holberton school" },
-    { $set: { address: "972 Mission street" } }
-)
+// Update the documents in the collection
+mongo $1 --eval 'db.school.updateMany({name: "Holberton school"}, {$set: {address: "972 Mission street"}})'
+
