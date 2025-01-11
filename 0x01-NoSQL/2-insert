@@ -1,2 +1,12 @@
-//inserts a document in the collection school
-db.school.insertOne({name: "Holberton school"})
+#!/bin/bash
+
+# Check if the database name is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <database_name>"
+  exit 1
+fi
+
+DATABASE_NAME=$1
+
+# Insert the document into the collection
+mongo $DATABASE_NAME --eval 'db.school.insertOne({name: "ALX"})'
