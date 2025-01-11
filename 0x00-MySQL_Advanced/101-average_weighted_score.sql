@@ -4,15 +4,14 @@ DELIMITER //
 CREATE PROCEDURE ComputeAverageWeightedScoreForUsers()
 BEGIN
     DECLARE avg_weighted_score DECIMAL(10,2);
+    DECLARE user_id INT;
+    DECLARE done INT DEFAULT 0;
 
     -- Declare a cursor to iterate over all users
     DECLARE user_cursor CURSOR FOR SELECT id FROM users;
 
-    -- Declare variables to hold user_id and average weighted score
-    DECLARE user_id INT;
-
     -- Declare a handler for the end of the cursor
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
     -- Open the cursor
     OPEN user_cursor;
