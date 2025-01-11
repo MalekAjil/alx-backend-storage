@@ -1,0 +1,3 @@
+// List documents with names starting by "ALX"
+mongo $1 --eval 'db.school.find({name: {$regex: "^ALX"}}).forEach(printjson)'
+
