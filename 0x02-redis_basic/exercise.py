@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Redis"""
+"""Redis Module"""
 
 import redis
 import uuid
